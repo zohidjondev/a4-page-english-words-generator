@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+* {
+  font-family: 'Zilla Slab';
+}
+
+body {
+  background: rgb(204, 204, 204);
+}
+
+div > p,
+span,
+li,
+td {
+  font-size: 13.5pt;
+}
+
+div {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+div[size="A4"] {
+  width: 21cm;
+  height: 29.7cm;
+}
+div[size="A4"][layout="portrait"] {
+  width: 29.7cm;
+  height: 21cm;
+}
+@media print {
+  body,
+  page {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
