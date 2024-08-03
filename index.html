@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A4</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <div style="padding: 20px" size="A4"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcard Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" />
+</head>
+<body>
+  <div class="container">
+    <h1>Flashcard Generator</h1>
+    <div class="form-group">
+      <label for="word">Word:</label>
+      <textarea id="word" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="topic">Topic:</label>
+      <textarea id="topic" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="definition">Definition:</label>
+      <textarea id="definition" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="example1">Example 1:</label>
+      <textarea id="example1" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="example2">Example 2:</label>
+      <textarea id="example2" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="pronunciation">Pronunciation:</label>
+      <textarea id="pronunciation" rows="2"></textarea>
+    </div>
+    <div class="char-count" id="char-count">
+      0/130 (Examples), 0/180 (Definition + Pronunciation)
+    </div>
+    <div class="form-group">
+      <label for="file-name">HTML File Name:</label>
+      <textarea id="file-name" rows="1"></textarea>
+    </div>
+    <div class="button-group">
+      <button onclick="generateHtml()">Generate HTML</button>
+      <button onclick="saveProgress()">Save Progress</button>
+      <button onclick="clearProgress()">Clear Progress</button>
+      <button onclick="loadProgress()">Load Progress</button>
+    </div>
+    <div class="flashcard-count" id="flashcard-count">
+      Creating Flashcard: 1/15
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
