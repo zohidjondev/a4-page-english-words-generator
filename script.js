@@ -1,5 +1,3 @@
-// script.js
-
 let flashcards = [];
 let currentFlashcard = 1;
 const maxExamplesChars = 130;
@@ -180,37 +178,26 @@ function writeHtmlFile() {
   <body>
     <div class="a4-div" size="A4">
       ${flashcards.join("")}
-      <!-- FLASHCARDS_PLACEHOLDER -->
-
-      <!-- The code below what python code will generate, commented if it is not used in order to change the style of html -->
-
-      <!-- <div class="word-card">
-        <div class="word">
-          <span>{word}</span>
-          <span>{pronunciation}</span>
-        </div>
-        <div class="topic">{topic}</div>
-        <div class="definition-and-pronunciation">
-          <p>{definition}</p>
-        </div>
-        <div class="examples">
-          <ul>
-            <li>{example1}</li>
-            <li>{example2}</li>
-          </ul>
-        </div>
-      </div> -->
     </div>
   </body>
-</html>`;
+</html>
+  `;
 
   const blob = new Blob([htmlContent], { type: "text/html" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `${fileName}_${Math.floor(currentFlashcard / 15)}.html`;
+  link.download = `${fileName}.html`;
   link.click();
+}
 
-  alert("HTML file generated successfully!");
+function clearInputFields() {
+  document.getElementById("word").value = "";
+  document.getElementById("topic").value = "";
+  document.getElementById("definition").value = "";
+  document.getElementById("example1").value = "";
+  document.getElementById("example2").value = "";
+  document.getElementById("pronunciation").value = "";
+  updateCharCount();
 }
 
 function updateFlashcardLabel() {
@@ -220,24 +207,55 @@ function updateFlashcardLabel() {
 }
 
 function saveProgress() {
+  const word = document.getElementById("word").value;
+  const topic = document.getElementById("topic").value;
+  const definition = document.getElementById("definition").value;
+  const example1 = document.getElementById("example1").value;
+  const example2 = document.getElementById("example2").value;
+  const pronunciation = document.getElementById("pronunciation").value;
+  const fileName = document.getElementById("file-name").value;
+
   const progress = {
+    word,
+    topic,
+    definition,
+    example1,
+    example2,
+    pronunciation,
+    fileName,
     flashcards,
     currentFlashcard,
   };
+
+  const jsonContent = JSON.stringify(progress, null, 2);
+  const blob = new Blob([jsonContent], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "flashcardProgress.json";
+  link.click();
+
   localStorage.setItem("flashcardProgress", JSON.stringify(progress));
-  alert("Progress saved successfully!");
+  alert("Progress saved! Do you want to continue?");
 }
 
 function loadProgress() {
   const savedProgress = localStorage.getItem("flashcardProgress");
   if (savedProgress) {
-    const {
-      flashcards: savedFlashcards,
-      currentFlashcard: savedCurrentFlashcard,
-    } = JSON.parse(savedProgress);
-    flashcards = savedFlashcards || [];
-    currentFlashcard = savedCurrentFlashcard || 1;
+    const progress = JSON.parse(savedProgress);
+    document.getElementById("word").value = progress.word;
+    document.getElementById("topic").value = progress.topic;
+    document.getElementById("definition").value = progress.definition;
+    document.getElementById("example1").value = progress.example1;
+    document.getElementById("example2").value = progress.example2;
+    document.getElementById("pronunciation").value = progress.pronunciation;
+    document.getElementById("file-name").value = progress.fileName;
+    flashcards = progress.flashcards;
+    currentFlashcard = progress.currentFlashcard;
     updateFlashcardLabel();
+    updateCharCount();
+    alert("Progress loaded!");
+  } else {
+    alert("No saved progress found!");
   }
 }
 
@@ -245,14 +263,7 @@ function clearProgress() {
   localStorage.removeItem("flashcardProgress");
   flashcards = [];
   currentFlashcard = 1;
+  clearInputFields();
   updateFlashcardLabel();
-  alert("Progress cleared successfully!");
-}
-
-function clearInputFields() {
-  document.getElementById("word").value = "";
-  document.getElementById("definition").value = "";
-  document.getElementById("example1").value = "";
-  document.getElementById("example2").value = "";
-  document.getElementById("pronunciation").value = "";
+  alert("Progress cleared!");
 }
